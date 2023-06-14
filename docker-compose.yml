@@ -9,7 +9,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - pg_db_data:\E:\Docker\dockerization\postgres\data
+      - pgdb:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   web:
@@ -28,25 +28,8 @@ services:
       - DB_PASSWORD=postgres
       - DB_HOST=pg_db
       - DB_PORT=5432
-    volumes:
-      - .:/testing
     ports:
       - "8000:8000"
 
-  pg_admin:
-    profiles: ["debug"]
-    image: dpage/pgadmin4
-    ports:
-      - "7000:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: 1234@admin.com
-      PGADMIN_DEFAULT_PASSWORD: 1234
-    volumes:
-      - pg_admin_data:\E:\Docker\dockerization\pgadmin
-    depends_on:
-      - pg_db
-
 volumes:
-  pg_db_data:
-  pg_admin_data:
-  media:
+  pgdb:
